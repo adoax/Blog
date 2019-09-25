@@ -2,10 +2,13 @@
 block body %}
 
 <div class="container pt-5">
-  {% for message in app.flashes('accesDenied') %}
-  <div class="alert alert-danger text-center">
-    {{ message }}
-  </div>
+  {% for messages in app.flashes(['accesDenied', 'logout']) %}
+    {% for message in messages %}
+    <div class="alert alert-danger">
+      {{ message }}
+
+    </div>
+    {% endfor %}
   {% endfor %}
   <div class="row">
     {% for article in articles %}
@@ -18,7 +21,7 @@ block body %}
             {{ article.content }}
           </p>
           <a
-            href="{{ path('article_show', { id: article.id }) }}"
+            href="{{ path('article_show', { slug: article.slug }) }}"
             class="btn btn-success btn-block"
             >Voir plus</a
           >

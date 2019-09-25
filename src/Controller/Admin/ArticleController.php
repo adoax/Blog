@@ -4,17 +4,19 @@ namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use Cocur\Slugify\Slugify;
 use App\Repository\ArticleRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/article")
  */
 class ArticleController extends AbstractController
-{
+{   
+
     /**
      * @Route("/", name="article_admin_index", methods={"GET"})
      */
@@ -29,13 +31,14 @@ class ArticleController extends AbstractController
      * @Route("/new", name="article_admin_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {
+    {   $slug = new Slugify();
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager();            
+            $article->setSlug($slug->slugify($article->getName()));
             $entityManager->persist($article);
             $entityManager->flush();
 
@@ -45,6 +48,7 @@ class ArticleController extends AbstractController
         return $this->render('admin/article/new.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
+            'slug' => $article->getSlug()
         ]);
     }
 
@@ -62,19 +66,21 @@ class ArticleController extends AbstractController
      * @Route("/{id}/edit", name="article_admin_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Article $article): Response
-    {
+    {   $slug = new Slugify();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $entityManager = $this->getDoctrine()->getManager();
+            $article->setSlug($slug->slugify($article->getName()));
+            $entityManager->persist($article);
+            $entityManager->flush();
             return $this->redirectToRoute('article_index');
         }
 
         return $this->render('admin/article/edit.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 

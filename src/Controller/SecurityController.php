@@ -23,14 +23,15 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        if ( $this->getUser()) {
+        if ($this->getUser()) {
             return $this->redirectToRoute('app_profil');
         }
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
-        ]);
+        ]
+    );
     }
     /**
      * @Route("/register", name="user_registration")
@@ -44,11 +45,9 @@ class SecurityController extends AbstractController
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
-
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -62,21 +61,25 @@ class SecurityController extends AbstractController
 
         return $this->render(
             'security/register.html.twig',
-            array('registrationForm' => $form->createView())
+            [
+                'registrationForm' => $form->createView()
+            ], $this->addFlash('register', 'Vous êtes bien enregistrer, vous pouvez vous connectez')
         );
     }
 
     /**
      * @Route("/logout", name="app_logout", methods={"GET"})
      */
-    public function logout() {
-
+    public function logout()
+    {
+        return $this->addFlash('logout', 'A bientot !');
     }
-    
+
     /**
      * @Route("/profil", name="app_profil", methods={"GET"})
      */
-    public function profil() {
+    public function profil()
+    {
         return $this->render('user/index.html.twig');
     }
 }
