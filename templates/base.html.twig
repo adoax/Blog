@@ -16,10 +16,10 @@
                   <a class="nav-link" href="{{ path('article_index') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Features</a>
+                  <a class="nav-link" href="{{ path('article_admin_index') }}">Admin</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{% if app.user %} {{path('article_index')}} {%  else %} {{ path('app_login') }} {% endif %}">{% if app.user %}Profil {% else %} Se connecter {% endif %}
+                <a class="nav-link" href="{% if app.user %} {{path('app_profil')}} {%  else %} {{ path('app_login') }} {% endif %}">{% if app.user %}Profil {% else %} Se connecter {% endif %}
                     </a>
                   </li>
               </ul>

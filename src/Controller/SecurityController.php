@@ -23,6 +23,10 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+        if ( $this->getUser()) {
+            return $this->redirectToRoute('app_profil');
+        }
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
@@ -67,5 +71,12 @@ class SecurityController extends AbstractController
      */
     public function logout() {
 
+    }
+    
+    /**
+     * @Route("/profil", name="app_profil", methods={"GET"})
+     */
+    public function profil() {
+        return $this->render('user/index.html.twig');
     }
 }
