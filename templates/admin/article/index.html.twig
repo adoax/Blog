@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Content</th>
                 <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +22,26 @@
                 <td>{{ article.name }}</td>
                 <td>{{ article.content }}</td>
                 <td>
-                    <a class="btn btn-success" href="{{ path('article_admin_show', {'id': article.id}) }}">Voir</a>
                     <a class="btn btn-primary" href="{{ path('article_admin_edit', {'id': article.id}) }}">Modifier</a>
+                    {{ include('admin/article/_delete_form.html.twig') }}
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Aucun a article</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                <td>
+                    <form action="{{ path('article_multiple_admin_delete', {'id': article.id}) }}" onsubmit="return confirm('Voulait vous vraiment supprimer cette article ?');" class="form-check">
+                        <input type="checkbox" class="form-check-input">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                    </td>
+                    
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">Aucun a article</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="btn btn-danger">Suppresion Multiple</button>
+    </form>
 
     <a class="btn btn-primary btn-block btn-lg text-center" href="{{ path('article_admin_new') }}">Création d'un nouveau article</a>
 {% endblock %}

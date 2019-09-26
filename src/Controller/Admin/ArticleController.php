@@ -97,4 +97,18 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('article_index');
     }
+
+    /**
+     * @Route("/multiple/{id}", name="article_multiple_admin_delete", methods={"DELETE"})
+     */
+    public function MultipleDelete(Request $request, Article $article): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($article);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('article_index');
+    }
 }
