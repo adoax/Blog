@@ -75,11 +75,5 @@ class SecurityController extends AbstractController
         return $this->addFlash('logout', 'A bientot !');
     }
 
-    /**
-     * @Route("/profil", name="app_profil", methods={"GET"})
-     */
-    public function profil()
-    {
-        return $this->render('user/index.html.twig');
-    }
+
 }

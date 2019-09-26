@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %} {% block title %}Hello UserController!{% endblock
+%} {% block body %}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<div class="row">
+  <div class="col col-md-5">{{ form_row(form.oldPassword) }}</div>
+  <div class="col col-md-5">{{ form_row(form.ChangePassword) }}</div>
+</div>
+<button class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+{% endblock %}

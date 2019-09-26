@@ -7,6 +7,7 @@
 <div class="container pt-3">
     <h1 class="text-center">Hello {{ app.user.username }}! ✅</h1>
 
+    <a href="{{ path('app_change_password')}}" class="btn btn-danger">Changer de mot de passe</a>
     <a href="{{ path('app_logout')}}" class="btn btn-danger">Se deconecter</a>
 </div>
 {% endblock %}

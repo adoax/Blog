@@ -34,6 +34,11 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ChangePassword;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -109,6 +114,18 @@ class User implements UserInterface
     public function eraseCredentials()
     {
 
+    }
+
+    public function getChangePassword(): ?string
+    {
+        return $this->ChangePassword;
+    }
+
+    public function setChangePassword(?string $ChangePassword): self
+    {
+        $this->ChangePassword = $ChangePassword;
+
+        return $this;
     }
    
 
