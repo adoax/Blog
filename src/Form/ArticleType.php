@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Cocur\Slugify\Slugify;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ArticleType extends AbstractType
 {
@@ -17,7 +19,9 @@ class ArticleType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('content', TextType::class)
-            ->add('category')
+            ->add('category',  null, [
+                'placeholder' => 'Selectioner la category'
+            ])
              
         ;
     }

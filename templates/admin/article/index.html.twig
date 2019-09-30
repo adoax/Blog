@@ -19,10 +19,10 @@
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article.name }}</td>
-                <td>{{ article.content }}</td>
-                <td>
-                    <a class="btn btn-success" href="{{ path('article_admin_show', {'id': article.id}) }}">Voir</a>
-                    <a class="btn btn-primary" href="{{ path('article_admin_edit', {'id': article.id}) }}">Modifier</a>
+                <td>{{ article.ExtraitContent }}</td>
+                <td class="d-inline-flex">
+                    <a class="btn btn-success" href="{{ path('article_admin_edit', {'id': article.id}) }}">Modifier</a>
+                    {{ include('admin/article/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}

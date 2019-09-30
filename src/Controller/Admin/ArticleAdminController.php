@@ -14,16 +14,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/admin/article")
  */
-class ArticleController extends AbstractController
+class ArticleAdminController extends AbstractController
 {   
 
     /**
      * @Route("/", name="article_admin_index", methods={"GET"})
      */
     public function index(ArticleRepository $articleRepository): Response
-    {
+    {   
         return $this->render('admin/article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articleRepository->findAll()
         ]);
     }
 
@@ -47,8 +47,7 @@ class ArticleController extends AbstractController
 
         return $this->render('admin/article/new.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
-            'slug' => $article->getSlug()
+            'form' => $form->createView()
         ]);
     }
 
@@ -75,7 +74,7 @@ class ArticleController extends AbstractController
             $article->setSlug($slug->slugify($article->getName()));
             $entityManager->persist($article);
             $entityManager->flush();
-            return $this->redirectToRoute('article_index');
+            return $this->redirectToRoute('article_admin_index');
         }
 
         return $this->render('admin/article/edit.html.twig', [
@@ -95,6 +94,6 @@ class ArticleController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('article_index');
+        return $this->redirectToRoute('article_admin_index');
     }
 }

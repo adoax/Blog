@@ -12,7 +12,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
-{
+{   
+
+    /**
+     * @Route("/")
+     */
+    public function index() {
+        return $this->redirectToRoute('article_index');
+    }
+
     /**
      * @Route("/login", name="app_login")
      */
