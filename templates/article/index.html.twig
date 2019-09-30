@@ -21,7 +21,7 @@ block body %}
             {{ article.ExtraitContent }}
           </p>
           <a
-            href="{{ path('article_show', { slug: article.slug }) }}"
+            href="{{ path('article_show', { id: article.id, slug: article.slug }) }}"
             class="btn btn-success btn-block"
             >Voir plus</a
           >
@@ -37,3 +37,5 @@ block body %}
 </div>
 
 {% endblock %}
+
+
