@@ -4,6 +4,9 @@ body %}
   <h1 class="text-center">{{ article.name }}</h1>
   <p>{{article.slug}}</p>
   <P>{{ article.category }}</P>
+
+  {{  article.options | join(', ') }}
+  
   <p>{{ article.content }}</p>
 </div>
 
