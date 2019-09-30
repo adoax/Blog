@@ -72,6 +72,7 @@ class ArticleAdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $article->setSlug($slug->slugify($article->getName()));
+            $article->setUpdatedAt(new \DateTime);
             $entityManager->persist($article);
             $entityManager->flush();
             return $this->redirectToRoute('article_admin_index');

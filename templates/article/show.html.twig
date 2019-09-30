@@ -6,7 +6,7 @@ body %}
   <P>{{ article.category }}</P>
 
   {{  article.options | join(', ') }}
-  
+  {{article.UpdatedAt.timestamp}}
   <p>{{ article.content }}</p>
 </div>
 
