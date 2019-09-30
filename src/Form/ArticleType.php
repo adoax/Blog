@@ -3,12 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Article;
-use App\Entity\Category;
+use App\Entity\Options;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ArticleType extends AbstractType
@@ -21,6 +20,11 @@ class ArticleType extends AbstractType
             ->add('content', TextType::class)
             ->add('category',  null, [
                 'placeholder' => 'Selectioner la category'
+            ])
+            ->add('options', EntityType::class, [
+                'class' => Options::class,
+                'choice_label' => 'name',
+                'multiple' => true
             ])
              
         ;
