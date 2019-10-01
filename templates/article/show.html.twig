@@ -2,11 +2,14 @@
 body %}
 <div class="container pt-5">
   <h1 class="text-center">{{ article.name }}</h1>
+{% for image in article.images %}
+ <img src="{{ image.url }}" alt="Ramdom">
+ <caption>{{ image.caption }}</caption>
+{% endfor %}
   <p>{{article.slug}}</p>
   <P>{{ article.category }}</P>
 
   {{  article.options | join(', ') }}
-  {{article.UpdatedAt.timestamp}}
   <p>{{ article.content }}</p>
 </div>
 

@@ -28,7 +28,10 @@ class ArticleType extends AbstractType
                 'multiple' => true
             ])
             ->add('images', CollectionType::class, [
-                'entry_type' => ImageType::class
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false
             ])
              
         ;

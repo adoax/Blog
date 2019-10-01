@@ -1,9 +1,22 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
 <div class="row">
   <div class="col col-md-5">{{ form_row(form.name) }}</div>
   <div class="col col-md-5">{{ form_row(form.content) }}</div>
   <div class="col col-md-5">{{ form_row(form.category) }}</div>
+  <div class="col col-md-5">{{ form_row(form.options) }}</div>
+
+  <div
+    class="col col-md-12 js-genus-scientist-wrapper"
+    data-prototype="{{ form_row(form.images.vars.prototype)|e('html_attr') }}"
+    data-index="{{ form.images | length }}"
+  >
+    {% for image in form.images %} {% endfor %}
+    <a href="#" class="js-genus-scientist-add">
+      <span class="fas fa-plus-circle"></span>
+      Ajouter une image
+    </a>
+  </div>
 </div>
+
 <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

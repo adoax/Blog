@@ -57,7 +57,7 @@ class Article
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article")
+     * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", cascade={"persist"})
      */
     private $images;
 

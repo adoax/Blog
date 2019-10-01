@@ -35,6 +35,7 @@ class ArticleAdminController extends AbstractController
     {
         $slug = new Slugify();
         $article = new Article();
+
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
