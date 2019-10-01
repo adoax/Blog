@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use App\Entity\Image;
 use App\Form\ArticleType;
 use Cocur\Slugify\Slugify;
 use App\Repository\ArticleRepository;
@@ -15,13 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  * @Route("/admin/article")
  */
 class ArticleAdminController extends AbstractController
-{   
+{
 
     /**
      * @Route("/", name="article_admin_index", methods={"GET"})
      */
     public function index(ArticleRepository $articleRepository): Response
-    {   
+    {
         return $this->render('admin/article/index.html.twig', [
             'articles' => $articleRepository->findAll()
         ]);
@@ -31,13 +32,14 @@ class ArticleAdminController extends AbstractController
      * @Route("/new", name="article_admin_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
-    {   $slug = new Slugify();
+    {
+        $slug = new Slugify();
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();            
+            $entityManager = $this->getDoctrine()->getManager();
             $article->setSlug($slug->slugify($article->getName()));
             $entityManager->persist($article);
             $entityManager->flush();
@@ -65,7 +67,8 @@ class ArticleAdminController extends AbstractController
      * @Route("/{id}/edit", name="article_admin_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Article $article): Response
-    {   $slug = new Slugify();
+    {
+        $slug = new Slugify();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -89,7 +92,7 @@ class ArticleAdminController extends AbstractController
      */
     public function delete(Request $request, Article $article): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
             $entityManager->flush();
