@@ -15,25 +15,35 @@ block body %}
       <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
         <div class="card-header">
           <h4>{{ article.name }}</h4>
-        </div>
-        <div class="card-body">
+
           
-          {% cache 'article' ~ article.UpdatedAt.timestamp article.UpdatedAt.timestamp %}
-          
-          <p>Villes: {{ article.options | join(', ') }}</p>
-          
+          {% cache 'images' ~ article.UpdatedAt.timestamp
+          article.UpdatedAt.timestamp %}
+
+          {% for image in article.images |slice(0, 1) %}
+            <img src="{{ image.url }}" alt="" class="img-fluid" />
+          {% endfor %}
           
           {% endcache %}
-          
+        </div>
+        <div class="card-body">
+
+          {% cache 'options' ~ article.UpdatedAt.timestamp
+          article.UpdatedAt.timestamp %}
+
+            <p>Villes: {{ article.options | join(', ') }}</p>
+
+          {% endcache %}
+
           <p class="card-text">
             {{ article.ExtraitContent }}
           </p>
           <a
-          href="{{
-            path('article_show', { id: article.id, slug: article.slug })
-          }}"
-          class="btn btn-success btn-block"
-          >Voir plus</a
+            href="{{
+              path('article_show', { id: article.id, slug: article.slug })
+            }}"
+            class="btn btn-success btn-block"
+            >Voir plus</a
           >
         </div>
       </div>
