@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %} {% block title %}Hello HomeAdminController!{%
+endblock %} {% block body %}
+
+<table class="table text-center pt-3">
+  <thead>
+    <tr>
+      <th>Article</th>
+      <th>Categories</th>
+      <th>Option</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td ><a class="btn btn-primary" href="{{ path('article_admin_index') }}">Afficher</a></td>
+        <td ><a class="btn btn-primary" href="{{ path('category') }}">Afficher</a></td>
+        <td ><a class="btn btn-primary" href="{{ path('options_index') }}">Afficher</a></td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}
