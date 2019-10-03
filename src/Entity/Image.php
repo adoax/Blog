@@ -21,6 +21,7 @@ class Image
     private $id;
 
     /**
+     * 
      * @ORM\Column(type="string", length=255)
      */
     private $url;
@@ -31,6 +32,7 @@ class Image
     private $fileName;
 
     /**
+     * 
      * @ORM\Column(type="string", length=255)
      */
     private $caption;
@@ -50,12 +52,12 @@ class Image
         return $this->id;
     }
 
-    public function getUrl(): ?string
+    public function getUrl()
     {
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl($url)
     {
         $this->url = $url;
 
@@ -106,6 +108,7 @@ class Image
     public function setFileName(File $fileName)
     {
         $this->fileName = $fileName;
+        
         if ($this->fileName instanceof UploadedFile) {
             $this->update_at = new \DateTime('now');
         }

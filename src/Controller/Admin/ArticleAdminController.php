@@ -38,14 +38,13 @@ class ArticleAdminController extends AbstractController
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $article->setSlug($slug->slugify($article->getName()));
             $entityManager->persist($article);
-            //dd($article);
-           $entityManager->flush();
-            
+            $entityManager->flush();
+
             return $this->redirectToRoute('article_index');
         }
 
@@ -103,29 +102,5 @@ class ArticleAdminController extends AbstractController
         return $this->redirectToRoute('article_admin_index');
     }
 
-    /**
-     * @Route("/{articleId}/{imageId}", name="articleImg_admin_delete", methods={"DELETE"})
-     */
-    public function deleteImages(Request $request, Article $article, $articleId, $imageId): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $article->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
 
-            $image = $em->getRepository(Article::class)->find($articleId);
-            if (!$image) {
-                throw $this->createNotFoundException('genus not found');
-            }
-
-            $imageArticle = $em->getRepository(Image::class)->find($imageId);
-            if (!$imageArticle) {
-                throw $this->createNotFoundException('scientist not found');
-            }         
-
-            $image->removeImage($imageArticle);
-            $em->remove($article);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('article_admin_index');
-    }
 }
