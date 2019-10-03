@@ -25,7 +25,8 @@ class ArticleType extends AbstractType
             ->add('options', EntityType::class, [
                 'class' => Options::class,
                 'choice_label' => 'name',
-                'multiple' => true
+                'multiple' => true,
+                'required' => false
             ])
             ->add('images', CollectionType::class, [
                 'entry_type' => ImageType::class,

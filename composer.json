@@ -30,7 +30,8 @@
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
         "symfony/yaml": "4.3.*",
-        "twig/cache-extension": "^1.4@dev"
+        "twig/cache-extension": "^1.4@dev",
+        "vich/uploader-bundle": "^1.10"
     },
     "require-dev": {
         "symfony/debug-pack": "*",

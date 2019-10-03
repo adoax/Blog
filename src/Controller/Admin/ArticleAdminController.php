@@ -38,13 +38,14 @@ class ArticleAdminController extends AbstractController
 
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $article->setSlug($slug->slugify($article->getName()));
             $entityManager->persist($article);
-            $entityManager->flush();
-
+            //dd($article);
+           $entityManager->flush();
+            
             return $this->redirectToRoute('article_index');
         }
 
