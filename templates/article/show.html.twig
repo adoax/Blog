@@ -3,7 +3,7 @@ body %}
 <div class="container pt-5">
   <h1 class="text-center">{{ article.name }}</h1>
 {% for image in article.images %} 
-  <img src="{{ vich_uploader_asset(image, 'fileName') }}"/>
+  <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName') }}"/>
  <caption>{{ image.caption }}</caption>
 {% endfor %}
   <p>{{article.slug}}</p>

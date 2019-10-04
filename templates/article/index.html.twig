@@ -21,7 +21,7 @@ block body %}
           article.UpdatedAt.timestamp %}
 
           {% for image in article.images |slice(0, 1) %}
-            <img src="{{ image.url }}" alt="" class="img-fluid" />
+            <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName')  | imagine_filter('thumbs')  }}"/>
           {% endfor %}
           
           {% endcache %}
