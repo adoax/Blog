@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
-use App\Entity\Image;
 use App\Form\ArticleType;
 use Cocur\Slugify\Slugify;
 use App\Repository\ArticleRepository;
@@ -11,8 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
  * @Route("/admin/article")
@@ -69,7 +66,7 @@ class ArticleAdminController extends AbstractController
     /**
      * @Route("/{id}/edit", name="article_admin_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Article $article, CacheManager $cacheManager, UploaderHelper $helper): Response
+    public function edit(Request $request, Article $article): Response
     {
         $slug = new Slugify();
         $form = $this->createForm(ArticleType::class, $article);
