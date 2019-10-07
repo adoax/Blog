@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @route("/category")
+ * @route("/admin/category")
  */
 class CategoryController extends AbstractController
 {

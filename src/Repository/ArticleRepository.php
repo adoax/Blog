@@ -38,7 +38,6 @@ class ArticleRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getResult();
     }
-
     
 
     // /**
