@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,25 @@ class ArticleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
+    }
+
+    /**
+     * @return Query
+     */
+    public function findAllReverseQuery (): Query
+    {
+        return $this->createQueryBuilder('a')
+                    ->orderBy('a.id', 'DESC')
+                    ->getQuery();
+    }
+
+    
+    public function findAllReverse ()
+    {
+        return $this->createQueryBuilder('a')
+                    ->orderBy('a.id', 'DESC')
+                    ->getQuery()
+                    ->getResult();
     }
 
     

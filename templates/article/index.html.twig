@@ -13,8 +13,7 @@ block body %}
     {% for article in articles %}
     <div class="col-3">
       <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-        <div class="card-header">
-          <h4>{{ article.name }}</h4>
+        <div class="cardheader">
 
           
           {% cache 'images' ~ article.UpdatedAt.timestamp
@@ -56,4 +55,20 @@ block body %}
   {% endfor %}
 </div>
 
+{# display navigation #}
+<div class="navigation">
+  {{ knp_pagination_render(articles) }}
+</div>
+
+
+{% endblock %}
+
+
+
+{% block stylesheets %}
+  <style>
+    .card {
+      border: none !important;
+    }
+  </style>
 {% endblock %}

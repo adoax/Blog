@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use Exception;
@@ -18,9 +19,18 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="article_index", methods={"GET"})
      */
-    public function index (ArticleRepository $articleRepository): Response {
+    public function index(ArticleRepository $articleRepository, PaginatorInterface $paginate, Request $request): Response
+    {
+
+        $articles = $paginate->paginate(
+            $articleRepository->findAllReverseQuery(),
+            $request->query->getInt('page', 1), 8
+        );
+        $articles->setCustomParameters([
+            'align' => 'center'
+        ]);
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articles,
         ]);
     }
 
@@ -28,7 +38,7 @@ class ArticleController extends AbstractController
      * @Route("/{id}-{slug}", name="article_show", methods={"GET"}, requirements={"slug": "[a-z0-9\-]*"})
      */
     public function show(Request $request, Article $article): Response
-    {   
+    {
         $verif = $request->attributes->get('_route_params');
 
         if ($verif['slug'] !== $article->getSlug()) {
