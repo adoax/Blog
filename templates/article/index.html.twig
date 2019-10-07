@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %} {% block title %}Article index{% endblock %} {%
 block body %}
 
+
 <div class="container pt-5">
   {% for messages in app.flashes(['accesDenied', 'logout']) %} {% for message in
   messages %}
@@ -16,14 +17,18 @@ block body %}
         <div class="cardheader">
 
           
-          {% cache 'images' ~ article.UpdatedAt.timestamp
-          article.UpdatedAt.timestamp %}
+           {% cache 'images' ~ article.UpdatedAt.timestamp
+          article.UpdatedAt.timestamp %} 
 
-          {% for image in article.images |slice(0, 1) %}
-            <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName')  | imagine_filter('thumbs')  }}"/>
-          {% endfor %}
+          {% if article.images  | slice(0, 1) %}
+            {% for image in article.images |slice(0, 1) %}
+              <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName')  | imagine_filter('thumbs')  }}"/> 
+            {% endfor %}
+          {% else %}
+              <img src="https://via.placeholder.com/360x230" class="img-fluid">
+          {% endif %}
           
-          {% endcache %}
+          {% endcache %} 
         </div>
         <div class="card-body">
 

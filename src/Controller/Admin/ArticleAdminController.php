@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
@@ -27,7 +26,7 @@ class ArticleAdminController extends AbstractController
     public function index(ArticleRepository $articleRepository): Response
     {
         return $this->render('admin/article/index.html.twig', [
-            'articles' => $articleRepository->findAll()
+            'articles' => $articleRepository->findAllReverse()
         ]);
     }
 
