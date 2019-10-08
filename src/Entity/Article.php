@@ -98,7 +98,7 @@ class Article
         return $this;
     }
 
-    public function getExtraitContent(): string
+    public function getExtraitContent(): ?string
     {
         if ($this->content === null) {
             return null;
