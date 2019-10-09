@@ -7,10 +7,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Helpers\Text;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
- * @ApiResource
+ * @ApiResource(attributes={"order"={"id": "DESC"}}, normalizationContext={"groups"={"book"}})
  */
 class Article
 {
@@ -18,21 +19,25 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"book"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"book"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book"})
      */
     private $slug;
 
@@ -48,6 +53,7 @@ class Article
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Options", inversedBy="articles")
+     * @Groups({"book"})
      */
     private $options;
 
@@ -58,8 +64,15 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
+     * @Groups({"book"})
      */
     private $images;
+
+    /**
+     *
+     * @Groups({"book"})
+     */
+    private $extraitContent;
 
     public function __construct()
     {

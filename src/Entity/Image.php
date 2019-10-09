@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -23,17 +24,20 @@ class Image
     /**
      * 
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book"})
      */
     private $url;
 
     /**
      * @Vich\UploadableField(mapping="article_image", fileNameProperty="url")
+     * @Groups({"book"})
      */
     private $fileName;
 
     /**
      * 
      * @ORM\Column(type="string", length=255)
+     * @Groups({"book"})
      */
     private $caption;
 
@@ -44,6 +48,7 @@ class Image
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"book"})
      */
     private $update_at;
 
