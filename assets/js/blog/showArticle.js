@@ -30,7 +30,6 @@ export default class ShowArticle extends React.Component {
         <div className="row">
           {this.props.match.params.react}
           <div>
-            {console.log(__dirname + "public/images/articles/")}
             {items.images.map(image => (
               <img
                 src={__dirname + "images/articles/" + image.url}

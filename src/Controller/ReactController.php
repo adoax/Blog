@@ -20,10 +20,4 @@ class ReactController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/show", name="show_react")
-     */
-    public function show() {
-        return $this->render('react/show.html.twig');
-    }
 }
