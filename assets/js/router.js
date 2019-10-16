@@ -1,24 +1,20 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-import ArticleAxios from "./blog/ArticleAxios";
-import ShowArticle from "./blog/showArticle";
+// import { Switch, Route } from "react-router-dom";
+// import IndexArticle from "./blog/public/article/IndexArticle";
+// import ShowArticle from "./blog/public/article/ShowArticle";
 
 
-export default function ArticleRoute() {
-  return (
-    <Switch>
-      <Route exact  path="/" component={ArticleAxios}/>
-      <Route  path="/show/:id" component={ShowArticle} />
-    </Switch>
-  );
-}
-
-// import { HydraAdmin, ResourceGuesser } from "@api-platform/admin";
-
-// export default () => (
-//     <HydraAdmin entrypoint="https://127.0.0.1:8000/api">
-//       <ResourceGuesser name="articles"/>
-//       <ResourceGuesser name="categories"/>
-//       <ResourceGuesser name="options"/>
-//     </HydraAdmin>
+// export default function ArticleRoute() {
+//   return (
+//     <Switch>
+//       <Route exact  path="/" component={IndexArticle}/>
+//       <Route  path="/show/:id" component={ShowArticle} />
+//     </Switch>
 //   );
+// }
+
+import { HydraAdmin } from "@api-platform/admin";
+console.log(process.env.API_URL)
+export default () => (
+  <HydraAdmin entrypoint={process.env.API_URL}></HydraAdmin>
+);

@@ -11,7 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
- * @ApiResource(attributes={"order"={"id": "DESC"}}, normalizationContext={"groups"={"book"}})
+ * @ApiResource(attributes={"order"={"id": "DESC"}}, normalizationContext={"groups"={"read"}})
  */
 class Article
 {
@@ -19,25 +19,25 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $slug;
 
@@ -53,7 +53,7 @@ class Article
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Options", inversedBy="articles")
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $options;
 
@@ -64,15 +64,11 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $images;
 
-    /**
-     *
-     * @Groups({"book"})
-     */
-    private $extraitContent;
+
 
     public function __construct()
     {
@@ -110,7 +106,9 @@ class Article
 
         return $this;
     }
-
+    /**
+     * @Groups({"read"})
+     */
     public function getExtraitContent(): ?string
     {
         if ($this->content === null) {

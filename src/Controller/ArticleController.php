@@ -35,7 +35,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}-{slug}", name="article_show", methods={"GET"}, requirements={"slug": "[a-z0-9\-]*"})
+     * @Route("/{id}-{slug}", name="article_show", methods={"GET"})
      */
     public function show(Request $request, Article $article): Response
     {

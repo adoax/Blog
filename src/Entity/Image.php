@@ -24,20 +24,20 @@ class Image
     /**
      * 
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $url;
 
     /**
      * @Vich\UploadableField(mapping="article_image", fileNameProperty="url")
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $fileName;
 
     /**
      * 
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $caption;
 
@@ -48,7 +48,7 @@ class Image
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $update_at;
 

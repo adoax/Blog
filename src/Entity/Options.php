@@ -18,13 +18,13 @@ class Options
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"book"})
+     * @Groups({"read"})
      */
     private $name;
 
