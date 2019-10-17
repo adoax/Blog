@@ -32,13 +32,13 @@ block body %}
         </div>
         <div class="card-body">
 
-          {% cache 'options' ~ article.UpdatedAt.timestamp
+          {#{% cache 'options' ~ article.UpdatedAt.timestamp
           article.UpdatedAt.timestamp %}
-
+#}
             <p>Villes: {{ article.options | join(', ') }}</p>
-
+{#
           {% endcache %}
-
+#}
           <p class="card-text">
             {{ article.ExtraitContent }}
           </p>

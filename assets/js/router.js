@@ -4,9 +4,19 @@ import {
   ResourceGuesser,
   ListGuesser,
   FieldGuesser,
-  ShowGuesser
+  ShowGuesser,
+  EditGuesser,
+  InputGuesser
 } from "@api-platform/admin";
-import { ArrayField, Datagrid, ImageField, TextField } from "react-admin";
+import {
+  Datagrid,
+  TextField,
+  ChipField,
+  SingleFieldList,
+  ReferenceArrayField,
+  ReferenceArrayInput,
+  SelectArrayInput
+} from "react-admin";
 
 // import { Switch, Route } from "react-router-dom";
 // import IndexArticle from "./blog/public/article/IndexArticle";
@@ -27,29 +37,69 @@ const ArticleList = props => (
     <FieldGuesser source="name" />
     <FieldGuesser source="slug" />
     <FieldGuesser source="extraitContent" />
-    <FieldGuesser source="images" />
-    <FieldGuesser source="options" />
+
+    <ReferenceArrayField
+      reference="options"
+      source="options"
+      label="Les options"
+    >
+      <SingleFieldList>
+        <ChipField source="name" />
+      </SingleFieldList>
+    </ReferenceArrayField>
   </ListGuesser>
 );
-
 const ArticleShow = props => (
   <ShowGuesser {...props}>
     <FieldGuesser source="name" addLabel={true} />
     <FieldGuesser source="slug" addLabel={true} />
     <FieldGuesser source="content" addLabel={true} />
-    <FieldGuesser source="options" addLabel={true} />
-    <ArrayField source="images">
+    <FieldGuesser source="num" addLabel={true} />
+    <ReferenceArrayField
+      reference="options"
+      source="options"
+      label="Les options"
+    >
+      <SingleFieldList>
+        <ChipField source="name" />
+      </SingleFieldList>
+    </ReferenceArrayField>
+
+    <ReferenceArrayField reference="images" source="images" label="Les images">
       <Datagrid>
         <TextField source="url" />
         <TextField source="caption" />
       </Datagrid>
-    </ArrayField>
+    </ReferenceArrayField>
   </ShowGuesser>
+);
+
+const ArticleEdit = props => (
+  <EditGuesser {...props}>
+    <InputGuesser source="name" />
+    <InputGuesser source="slug" />
+    <InputGuesser source="content" />
+
+    <ReferenceArrayInput source="options" reference="options" label="Option">
+      <SelectArrayInput optionText="name" />
+    </ReferenceArrayInput>
+    <div>
+      <p>Modifier/Ajouter un article avec une/des image(s)</p>
+      <a href={"/admin/article/" + props.id.match(/(\d+)/)[0] + "/edit"}>Cliquer ici</a>
+      {console.log(props.id.match(/(\d+)/)[0])}
+    </div>
+  </EditGuesser>
 );
 
 export default () => (
   <HydraAdmin entrypoint={process.env.API_URL}>
-    <ResourceGuesser name="articles" list={ArticleList} show={ArticleShow} />
+    <ResourceGuesser
+      name="articles"
+      list={ArticleList}
+      show={ArticleShow}
+      edit={ArticleEdit}
+    />
     <ResourceGuesser name="options" />
+    <ResourceGuesser name="images" />
   </HydraAdmin>
 );

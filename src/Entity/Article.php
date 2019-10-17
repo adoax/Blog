@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Helpers\Text;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -54,6 +56,7 @@ class Article
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Options", inversedBy="articles")
      * @Groups({"read"})
+     * @ApiFilter(SearchFilter::class, strategy="ipartial")
      */
     private $options;
 
@@ -76,6 +79,13 @@ class Article
         $this->updated_at = new \DateTime();
         $this->options = new ArrayCollection();
         $this->images = new ArrayCollection();
+    }
+    /**
+     * @Groups({"read"})
+     */
+    public function getNum()
+    {
+        return $this->id;
     }
 
     public function getId(): ?int
