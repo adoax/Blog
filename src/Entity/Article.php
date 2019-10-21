@@ -7,13 +7,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Helpers\Text;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
- * @ApiResource(attributes={"order"={"id": "DESC"}}, normalizationContext={"groups"={"read"}})
+ * @ApiResource(attributes={
+ * "order"={"id": "DESC"}})
  */
 class Article
 {
@@ -21,25 +21,25 @@ class Article
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({"read", "option_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "option_read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"read"})
+     * @Groups({"read", "option_read"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "option_read"})
      */
     private $slug;
 
@@ -55,8 +55,7 @@ class Article
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Options", inversedBy="articles")
-     * @Groups({"read"})
-     * @ApiFilter(SearchFilter::class, strategy="ipartial")
+     * @Groups({"option_read"})
      */
     private $options;
 
@@ -67,11 +66,9 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
-     * @Groups({"read"})
+     * @Groups({"images_read"})
      */
     private $images;
-
-
 
     public function __construct()
     {
@@ -80,14 +77,7 @@ class Article
         $this->options = new ArrayCollection();
         $this->images = new ArrayCollection();
     }
-    /**
-     * @Groups({"read"})
-     */
-    public function getNum()
-    {
-        return $this->id;
-    }
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -192,6 +182,26 @@ class Article
         }
 
         return $this;
+    }
+
+    /**
+     * Retourne le contenue Options, pour la vue
+     *
+     * @Groups({"read"})
+     */
+    public function getnameOption(): Collection
+    {
+        return $this->options;
+    }
+
+    /**
+     * blaqb
+     *
+     *@Groups({"read"})
+     */
+    public function getImageArticle() 
+    {
+       return $this->images;
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface

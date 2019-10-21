@@ -29,6 +29,8 @@ export default class ShowArticle extends React.Component {
       return (
         <div className="row">
           {this.props.match.params.react}
+          
+          <h3 className="mx-auto">{items.name}</h3>
           <div>
             {items.images.map(image => (
               <img
@@ -37,8 +39,20 @@ export default class ShowArticle extends React.Component {
               />
             ))}
           </div>
+          {items.options
+                    .map(option => <span className="badge badge-primary"> {option.name}</span>)
+                    .reduce(
+                      (acc, x) =>
+                      acc === null ? (
+                          x
+                          ) : (
+                          <>
+                            {acc}, {x}
+                          </>
+                        ),
+                        null
+                        )}
           <p>{items.content}</p>
-          <p>{items.name}</p>
         </div>
       );
     }

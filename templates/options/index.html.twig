@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Options index</h1>
 
-    <table class="table">
+    <table class="table table-striped text-center">
         <thead>
             <tr>
                 <th>Id</th>
@@ -18,9 +18,9 @@
             <tr>
                 <td>{{ option.id }}</td>
                 <td>{{ option.name }}</td>
-                <td>
-                    <a href="{{ path('options_show', {'id': option.id}) }}">show</a>
-                    <a href="{{ path('options_edit', {'id': option.id}) }}">edit</a>
+                <td class="d-inline-flex">
+                    {{ include('options/_delete_form.html.twig') }}
+                    <a href="{{ path('options_edit', {'id': option.id}) }}" class="btn btn-primary">edit</a>
                 </td>
             </tr>
         {% else %}

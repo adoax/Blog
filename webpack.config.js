@@ -51,10 +51,12 @@ Encore
     // enables @babel/preset-env polyfills
     .configureBabel(() => {}, {
         useBuiltIns: 'usage',
-        corejs: 3
+        corejs: 3,
     })
 
-
+    .configureBabel(function(babelConfig) {
+        babelConfig.plugins.push("@babel/plugin-proposal-class-properties");
+   })
       
 
     // enables Sass/SCSS support

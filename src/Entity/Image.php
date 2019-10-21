@@ -12,7 +12,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
  * @Vich\Uploadable
- * @ApiResource
+ * @ApiResource(
+ * denormalizationContext={"disable_type_enforcement"=true},
+ * normalizationContext={"groups"={"images_read"}})
  */
 class Image
 {
@@ -20,31 +22,33 @@ class Image
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read", "images_read"})
      */
     private $id;
 
     /**
      * 
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "images_read"})
      */
     private $url;
 
     /**
      * @Vich\UploadableField(mapping="article_image", fileNameProperty="url")
-     * @Groups({"read"})
+     * @Groups({"read", "images_read"})
      */
     private $fileName;
 
     /**
      * 
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "images_read"})
      */
     private $caption;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="images")
+     * @Groups({"images_read"})
      */
     private $article;
 

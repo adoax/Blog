@@ -33,15 +33,16 @@ export default class IndexArticle extends React.Component {
             <div className="col-3">
               <div className="card text-white bg-primary mb-3">
                 <div className="cardheader">
-                  {item.images[0] ? (
+                  {item.imageArticle[0] ? (
                     <div>
-                      {item.images.slice(0, 1).map(image => (
+                      {console.log(items)}
+                      {item.imageArticle.slice(0, 1).map(image => (
                         <img
                           src={
                             "./media/cache/thumbs/images/articles/" + image.url
                           }
                           className="img-fluid"
-                        ></img>
+                          ></img>
                       ))}
                     </div>
                   ) : (
@@ -55,22 +56,24 @@ export default class IndexArticle extends React.Component {
                   )}
                 </div>
                 <div className="card-body">
+                  <p className="font-weight-bold">{item.name}</p >
                   Ville:
-                  {item.options
+                  {item.nameOption
                     .map(option => <span> {option.name}</span>)
                     .reduce(
                       (acc, x) =>
-                        acc === null ? (
+                      acc === null ? (
                           x
-                        ) : (
+                          ) : (
                           <>
                             {acc}, {x}
                           </>
                         ),
-                      null
-                    )}
+                        null
+                        )}
                   <p className="card-text">{item.extraitContent}</p>
                    <Link to={"/show/" + item.id} className="btn btn-block btn-success">Voir plus </Link> 
+                        <Link to={'/edit/' + item.id} className="btn btn-danger btn-block">edit</Link>
                 </div>
               </div>
             </div>
