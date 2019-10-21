@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Select from 'react-select';
 
 export default class AddArticle extends React.Component {
   constructor(props) {
@@ -19,6 +20,14 @@ export default class AddArticle extends React.Component {
     });
   };
 
+  handleArray = options => {
+    console.log(options, 'hmmm')
+    this.setState(
+      { options  },
+      () => console.log(`Option selected:`, this.state.options.map(opt => (opt.name)))
+    );
+  };
+
   handleSubmit = async event => {
     event.preventDefault();
 
@@ -26,7 +35,7 @@ export default class AddArticle extends React.Component {
       name: this.state.name,
       content: this.state.content,
       slug: this.state.slug,
-      options: this.state.options
+      options: this.state.options.map(opt => ("/api/options/" + opt.id))
     };
     const axiosAwait = await axios
       .post(`https://127.0.0.1:8000/api/articles`, item)
@@ -43,17 +52,18 @@ export default class AddArticle extends React.Component {
       this.setState({
         items: res.data["hydra:member"],
         loading: true
-      });
+      });{console.log(this.state.items)}
     });
   }
 
   render() {
-    if (!this.state.loading) {
+       if (!this.state.loading) {
     return (
         <p>Chargement..</p>
     )} else {
       return (        
       <div>
+        
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Titre</label>
@@ -89,11 +99,17 @@ export default class AddArticle extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="options">Options : </label>
-          <select name="options">
-            {this.state.items.map(item => (
-              <option value={[item.id]}> {[item.name]} </option>
-            ))}
-          </select>
+          {/* <select multiple name="options" onChange={this.handleArray} className="form-control">
+            {this.state.items.map(option => (
+              <option value={"/api/options/" + option.id} > {option.name} </option>
+              ))}
+          </select> */}
+          <Select 
+          value={this.state.options}
+          onChange={this.handleArray}
+          options={this.state.items}
+          isMulti 
+          />
         </div>
         <button type="submit" className="btn btn-primary">
           Submit

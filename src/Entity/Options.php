@@ -32,13 +32,25 @@ class Options
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="options")
-     * @Groups({"option_read"})
      */
     private $articles;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+    }
+    /**
+     * @Groups({"option_read"})
+     */
+    public function getValue()
+    {
+        return $this->id;
+    }
+    /**
+     * @Groups({"option_read"})
+     */
+    public function getLabel() {
+        return $this->name;
     }
 
     public function getId(): ?int
