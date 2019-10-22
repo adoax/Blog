@@ -29,13 +29,13 @@ export default class IndexArticle extends React.Component {
     } else {
       return (
         <div className="row">
+          <Link to="/add" className="btn btn-danger btn-block">edit</Link>
           {items.map(item => (
             <div className="col-3">
               <div className="card text-white bg-primary mb-3">
                 <div className="cardheader">
                   {item.imageArticle[0] ? (
                     <div>
-                      {console.log(items)}
                       {item.imageArticle.slice(0, 1).map(image => (
                         <img
                           src={
@@ -73,7 +73,6 @@ export default class IndexArticle extends React.Component {
                         )}
                   <p className="card-text">{item.extraitContent}</p>
                    <Link to={"/show/" + item.id} className="btn btn-block btn-success">Voir plus </Link> 
-                        <Link to={'/edit/' + item.id} className="btn btn-danger btn-block">edit</Link>
                 </div>
               </div>
             </div>

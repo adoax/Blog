@@ -29,30 +29,35 @@ export default class ShowArticle extends React.Component {
       return (
         <div className="row">
           {this.props.match.params.react}
-          
+
           <h3 className="mx-auto">{items.name}</h3>
-          <div>
+          <div className="col-12">
             {items.images.map(image => (
               <img
                 src={__dirname + "images/articles/" + image.url}
                 className="img-fluid"
               />
             ))}
+
+            <p>{items.content}</p>
           </div>
-          {items.options
-                    .map(option => <span className="badge badge-primary"> {option.name}</span>)
-                    .reduce(
-                      (acc, x) =>
-                      acc === null ? (
-                          x
-                          ) : (
-                          <>
-                            {acc}, {x}
-                          </>
-                        ),
-                        null
-                        )}
-          <p>{items.content}</p>
+          <div className="col-12">
+            {items.nameOption
+              .map(option => (
+                <span className="badge badge-primary"> {option.name}</span>
+              ))
+              .reduce(
+                (acc, x) =>
+                  acc === null ? (
+                    x
+                  ) : (
+                    <>
+                      {acc} {x}
+                    </>
+                  ),
+                null
+              )}
+          </div>
         </div>
       );
     }

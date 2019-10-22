@@ -21,7 +21,6 @@ export default class AddArticle extends React.Component {
   };
 
   handleArray = options => {
-    console.log(options, 'hmmm')
     this.setState(
       { options  },
       () => console.log(`Option selected:`, this.state.options.map(opt => (opt.name)))
@@ -99,11 +98,6 @@ export default class AddArticle extends React.Component {
         </div>
         <div className="form-group">
           <label htmlFor="options">Options : </label>
-          {/* <select multiple name="options" onChange={this.handleArray} className="form-control">
-            {this.state.items.map(option => (
-              <option value={"/api/options/" + option.id} > {option.name} </option>
-              ))}
-          </select> */}
           <Select 
           value={this.state.options}
           onChange={this.handleArray}
