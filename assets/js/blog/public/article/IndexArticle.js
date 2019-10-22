@@ -29,7 +29,9 @@ export default class IndexArticle extends React.Component {
     } else {
       return (
         <div className="row">
-          <Link to="/add" className="btn btn-danger btn-block">edit</Link>
+          <Link to="/article/add" className="btn btn-danger col-6">Add Artilce</Link>
+          <Link to="/option/add" className="btn btn-danger col-6">Add Option</Link>
+          <Link to="/article/edit/27" className="btn btn-danger col-6">Add Option</Link>
           {items.map(item => (
             <div className="col-3">
               <div className="card text-white bg-primary mb-3">

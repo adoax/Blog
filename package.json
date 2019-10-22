@@ -3,6 +3,7 @@
         "@babel/plugin-proposal-class-properties": "^7.5.5",
         "@symfony/webpack-encore": "^0.28.0",
         "core-js": "^3.3.2",
+        "json-loader": "^0.5.7",
         "regenerator-runtime": "^0.13.2",
         "webpack-notifier": "^1.6.0"
     },
@@ -28,6 +29,7 @@
         "react-redux": "^5.0.7",
         "react-router-dom": "^5.1.2",
         "react-select": "^3.0.8",
+        "react-toastify": "^5.4.0",
         "recompose": "^0.30.0",
         "redux": "^4.0.4",
         "redux-form": "^8.2.6",

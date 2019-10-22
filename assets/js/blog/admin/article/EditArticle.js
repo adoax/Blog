@@ -7,7 +7,7 @@ import Error from "./../../Error";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default class AddArticle extends React.Component {
+export default class EditArticle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +16,8 @@ export default class AddArticle extends React.Component {
       slug: "",
       options: [],
       items: [],
-      loadign: false
+      loadign: false,
+      issou: []
     };
   }
 
@@ -56,6 +57,11 @@ export default class AddArticle extends React.Component {
       this.setState({
         items: res.data["hydra:member"],
         loading: true
+      });
+    });
+    axios.get(`https://127.0.0.1:8000/api/articles/27`).then(res => {
+      this.setState({
+        issou: res.data
       });
     });
   }
@@ -99,7 +105,7 @@ export default class AddArticle extends React.Component {
                 //.map(opt => "/api/options/" + opt.id)
               };
               const axiosAwait = axios
-                .post(`https://127.0.0.1:8000/api/articles`, item)
+                .get(`https://127.0.0.1:8000/api/articles/27`, item)
                 .then(res => {
                   console.log(res.data)
                 })
@@ -126,7 +132,6 @@ export default class AddArticle extends React.Component {
             isSubmitting
           }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(this.state.issou, 'issou')}
               <div className="form-group">
                 <label htmlFor="name">Titre</label>
                 <input
@@ -140,7 +145,7 @@ export default class AddArticle extends React.Component {
                   id="name"
                   placeholder="Entrer le titre de l'article"
                   onChange={handleChange}
-                  value={values.name}
+                  value={values.name, this.state.issou.name}
                   onBlur={handleBlur}
                 />
                 <Error touched={touched.name} message={errors.name} />
@@ -148,12 +153,17 @@ export default class AddArticle extends React.Component {
               <div className="form-group">
                 <label htmlFor="content">Contenue</label>
                 <textarea
-                  className="form-control"
+                  className={
+                    touched.content && errors.content
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
                   id="content"
                   placeholder="Contenue de l'article"
                   onChange={handleChange}
                   name="content"
-                  value={values.content}
+                  value={values.content, this.state.issou.content}
+                  
                   onBlur={handleBlur}
                 ></textarea>
                 <Error touched={touched.content} message={errors.content} />
@@ -162,17 +172,21 @@ export default class AddArticle extends React.Component {
                 <label htmlFor="slug">Url de la page</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={
+                    touched.slug && errors.slug
+                      ? "form-control is-invalid"
+                      : "form-control"
+                  }
                   name="slug"
                   id="slug"
                   placeholder="le-slug-doit-etre-comme-cette-exemple"
                   onChange={handleChange}
-                  value={values.slug}
+                  value={values.slug, this.state.issou.slug}
                   onBlur={handleBlur}
                 />
                 <Error touched={touched.slug} message={errors.slug} />
               </div>
-              <div className="form-group">
+              <div className="from-control">
                 <label htmlFor="options">Options : </label>
                 <Select
                   value={this.state.options}
