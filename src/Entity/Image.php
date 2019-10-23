@@ -27,7 +27,6 @@ class Image
     private $id;
 
     /**
-     * 
      * @ORM\Column(type="string", length=255)
      * @Groups({"read", "images_read"})
      */
@@ -35,7 +34,6 @@ class Image
 
     /**
      * @Vich\UploadableField(mapping="article_image", fileNameProperty="url")
-     * @Groups({"read", "images_read"})
      */
     private $fileName;
 
@@ -54,7 +52,7 @@ class Image
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"read"})
+     * @Groups({"read", "images_read"})
      */
     private $update_at;
 

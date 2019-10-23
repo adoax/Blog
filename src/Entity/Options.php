@@ -39,16 +39,10 @@ class Options
     {
         $this->articles = new ArrayCollection();
     }
-    /**
-     * @Groups({"option_read"})
-     */
     public function getValue()
     {
         return $this->id;
     }
-    /**
-     * @Groups({"option_read"})
-     */
     public function getLabel() {
         return $this->name;
     }

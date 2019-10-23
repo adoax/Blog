@@ -50,6 +50,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     * @Groups({"category_read"})
      */
     private $category;
 
@@ -66,7 +67,6 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="article", cascade={"persist"}, orphanRemoval=true)
-     * @Groups({"images_read"})
      */
     private $images;
 
@@ -78,6 +78,11 @@ class Article
         $this->images = new ArrayCollection();
     }
     
+    public function getNum(): ?int
+    {
+        return $this->id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
