@@ -1,17 +1,12 @@
 import React from "react";
 import {
-  HydraAdmin,
-  ResourceGuesser,
   ListGuesser,
   FieldGuesser,
   ShowGuesser,
   EditGuesser,
-  CreateGuesser,
-  InputGuesser
+  CreateGuesser
 } from "@api-platform/admin";
 import {
-  Datagrid,
-  TextField,
   ChipField,
   SingleFieldList,
   ReferenceArrayField,
@@ -23,18 +18,17 @@ import {
   LongTextInput,
   ImageInput,
   ImageField,
-  ArrayInput,
-  SimpleFormIterator,
-  TextInput,
-  SimpleForm,
-  edit
+  TextInput
 } from "react-admin";
-import addUploadFeature from "./addUploadFeature";
+import { minLength, required,regex } from "react-admin";
 
-//Permet de recuperer uniquement c'est vue, pour l'affichage de la liste
-const ArticleList = props => (
+const validateRequired = [required('Champ obligatoire'), minLength(2, 'doit avoir un minimun de 2 caractéres')]
+const validateContent = [required('Champ obligatoire'), minLength(5, 'doit avoir un minimun de 5 caractéres')]
+const ValidateSlug = [required('Champ obligatoire'), regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'le-slug-doit-etre-representer-comme-ceci')]
+
+export const ArticleList = props => (
   <ListGuesser {...props}>
-    <FieldGuesser source="name" />
+    <FieldGuesser source="name"/>
     <FieldGuesser source="slug" />
     <FieldGuesser source="extraitContent" />
 
@@ -49,7 +43,8 @@ const ArticleList = props => (
     </ReferenceArrayField>
   </ListGuesser>
 );
-const ArticleShow = props => (
+
+export const ArticleShow = props => (
   <ShowGuesser {...props}>
     <FieldGuesser source="name" addLabel={true} />
     <FieldGuesser source="slug" addLabel={true} />
@@ -69,34 +64,13 @@ const ArticleShow = props => (
       </SingleFieldList>
     </ReferenceArrayField>
 
-    <FieldGuesser source="img" addLabel={true} />
     <ImageField source="img" src="src" addLabel={true} />
   </ShowGuesser>
 );
 
-const ArticleEdit = props => (
+export const ArticleEdit = props => (
   <EditGuesser {...props}>
-    <InputGuesser source="name" />
-    <InputGuesser source="slug" />
-    <InputGuesser source="content" />
-
-    <ReferenceInput source="category" reference="categories">
-      <SelectInput optionText="name" />
-    </ReferenceInput>
-
-    <ReferenceArrayInput source="options" reference="options" label="Option">
-      <SelectArrayInput optionText="name" />
-    </ReferenceArrayInput>
-
-    <ImageInput source="img" label="Related pictures" accept="image/*" multiple>
-      <ImageField source="src" title="title" />
-    </ImageInput>
-  </EditGuesser>
-);
-
-const ArticleCreacte = props => (
-  <CreateGuesser {...props}>
-    <TextInput source="name" />
+    <TextInput source="name"  />
     <TextInput source="slug" />
     <LongTextInput source="content" />
 
@@ -108,36 +82,38 @@ const ArticleCreacte = props => (
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
 
-    <ImageInput source="img" label="Related pictures" accept="image/*" multiple>
+    <ImageInput
+      source="img"
+      label="Related pictures"
+      accept="image/*"
+      multiple={true}
+    >
+      <ImageField source="src" title="title" />
+    </ImageInput>
+  </EditGuesser>
+);
+
+export const ArticleCreacte = props => (
+  <CreateGuesser {...props}>
+    <TextInput source="name" validate={validateRequired}/>
+    <TextInput source="slug"  validate={ValidateSlug} />
+    <LongTextInput source="content" validate={validateContent} />
+
+    <ReferenceInput source="category" reference="categories">
+      <SelectInput optionText="name" />
+    </ReferenceInput>
+
+    <ReferenceArrayInput source="options" reference="options" label="Option">
+      <SelectArrayInput optionText="name" />
+    </ReferenceArrayInput>
+
+    <ImageInput
+      source="img"
+      label="Related pictures"
+      accept="image/*"
+      multiple={true}
+    >
       <ImageField source="src" title="title" />
     </ImageInput>
   </CreateGuesser>
-);
-
-const ImageCreate = props => (
-  <CreateGuesser {...props}>
-    <InputGuesser source="url" />
-    <InputGuesser source="caption" />
-
-    <ReferenceInput source="article" reference="articles">
-      <SelectInput optionText="id" />
-    </ReferenceInput>
-  </CreateGuesser>
-);
-
-const uploadCapableDataProvider = addUploadFeature(process.env.API_URL)
-
-export default () => (
-  <HydraAdmin entrypoint={process.env.API_URL}>
-    <ResourceGuesser
-      name="articles"
-      list={ArticleList}
-      show={ArticleShow}
-      edit={ArticleEdit}
-      create={ArticleCreacte}
-    />
-    <ResourceGuesser name="options" />
-    <ResourceGuesser name="categories" />
-    <ResourceGuesser name="images" create={ImageCreate} />
-  </HydraAdmin>
 );

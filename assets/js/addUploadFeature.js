@@ -11,17 +11,40 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
  * the `picture` sent property, with `src` and `title` attributes.
  */
 const addUploadFeature = requestHandler => (type, resource, params) => {
-    if (type === 'UPDATE' && resource === 'posts') {
+    if (type === 'UPDATE' && resource === 'articles') {
         // notice that following condition can be true only when `<ImageInput source="img" />` component has parameter `multiple={true}`
         // if parameter `multiple` is false, then data.img is not an array, but single object
         if (params.data.img && params.data.img.length) {
+            {console.log(params.data.img)}
             // only freshly dropped img are instance of File
             const formerimg = params.data.img.filter(p => !(p.rawFile instanceof File));
             const newimg = params.data.img.filter(p => p.rawFile instanceof File);
 
             return Promise.all(newimg.map(convertFileToBase64))
-                .then(base64img => base64img.map((picture64, index) => ({
-                    src: picture64,
+                .then(base64img => base64img.map((img64, index) => ({
+                    src: img64,
+                    title: `${newimg[index].title}`,
+                })))
+                .then(transformedNewimg => requestHandler(type, resource, {
+                    ...params,
+                    data: {
+                        ...params.data,
+                        img: [...transformedNewimg, ...formerimg],
+                    },
+                }));
+        }
+    } else if (type === 'CREATE' && resource === 'articles') {
+        // notice that following condition can be true only when `<ImageInput source="img" />` component has parameter `multiple={true}`
+        // if parameter `multiple` is false, then data.img is not an array, but single object
+        if (params.data.img && params.data.img.length) {
+            {console.log(resource)}
+            // only freshly dropped img are instance of File
+            const formerimg = params.data.img.filter(p => !(p.rawFile instanceof File));
+            const newimg = params.data.img.filter(p => p.rawFile instanceof File);
+
+            return Promise.all(newimg.map(convertFileToBase64))
+                .then(base64img => base64img.map((img64, index) => ({
+                    src: img64,
                     title: `${newimg[index].title}`,
                 })))
                 .then(transformedNewimg => requestHandler(type, resource, {
