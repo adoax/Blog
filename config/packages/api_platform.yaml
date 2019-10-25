@@ -1,3 +1,28 @@
 api_platform:
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
+    http_cache:
+        # Automatically generate etags for API responses.
+        etag: true
+
+        # Default value for the response max age.
+        max_age: 3600
+
+        # Default value for the response shared (proxy) max age.
+        shared_max_age: 3600
+
+        # Default values of the "Vary" HTTP header.
+        vary: ['Accept']
+
+        # To make all responses public by default.
+        public: ~
+
+        invalidation:
+          # To enable the tags-based cache invalidation system.
+          enabled: false
+
+          # URLs of the Varnish servers to purge using cache tags when a resource is updated.
+          varnish_urls: []
+
+          # To pass options to the client charged with the request.
+          request_options: []

@@ -10,6 +10,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Helpers\Text;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  * @ApiResource(attributes={
@@ -70,6 +71,11 @@ class Article
      */
     private $images;
 
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $img = [];
+    
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -251,4 +257,17 @@ class Article
 
         return $this;
     }
+
+    public function getImg(): ?array
+    {
+        return $this->img;
+    }
+
+    public function setImg(array $img): self
+    {
+        $this->img = $img;
+
+        return $this;
+    }
+
 }

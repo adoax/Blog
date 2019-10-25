@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20191008161254 extends AbstractMigration
+final class Version20191024130541 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,7 @@ final class Version20191008161254 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE article_options DROP PRIMARY KEY');
-        $this->addSql('ALTER TABLE article_options ADD PRIMARY KEY (options_id, article_id)');
+        $this->addSql('ALTER TABLE article ADD img JSON NOT NULL COMMENT \'(DC2Type:json_array)\'');
     }
 
     public function down(Schema $schema) : void
@@ -31,7 +30,6 @@ final class Version20191008161254 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE article_options DROP PRIMARY KEY');
-        $this->addSql('ALTER TABLE article_options ADD PRIMARY KEY (article_id, options_id)');
+        $this->addSql('ALTER TABLE article DROP img');
     }
 }

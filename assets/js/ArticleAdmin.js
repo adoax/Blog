@@ -20,13 +20,16 @@ import {
   ReferenceField,
   ReferenceInput,
   SelectInput,
+  LongTextInput,
   ImageInput,
   ImageField,
   ArrayInput,
   SimpleFormIterator,
   TextInput,
-  SimpleForm
+  SimpleForm,
+  edit
 } from "react-admin";
+import addUploadFeature from "./addUploadFeature";
 
 //Permet de recuperer uniquement c'est vue, pour l'affichage de la liste
 const ArticleList = props => (
@@ -66,12 +69,8 @@ const ArticleShow = props => (
       </SingleFieldList>
     </ReferenceArrayField>
 
-    <ReferenceArrayField reference="images" source="images" label="Les images">
-      <Datagrid>
-        <TextField source="url" />
-        <TextField source="caption" />
-      </Datagrid>
-    </ReferenceArrayField>
+    <FieldGuesser source="img" addLabel={true} />
+    <ImageField source="img" src="src" addLabel={true} />
   </ShowGuesser>
 );
 
@@ -89,20 +88,17 @@ const ArticleEdit = props => (
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
 
-    <div>
-      <p>Modifier/Ajouter un article avec une/des image(s)</p>
-      <a href={"/admin/article/" + props.id.match(/(\d+)/)[0] + "/edit"}>
-        Cliquer ici
-      </a>
-    </div>
+    <ImageInput source="img" label="Related pictures" accept="image/*" multiple>
+      <ImageField source="src" title="title" />
+    </ImageInput>
   </EditGuesser>
 );
 
 const ArticleCreacte = props => (
   <CreateGuesser {...props}>
-    <InputGuesser source="name" />
-    <InputGuesser source="slug" />
-    <InputGuesser source="content" />
+    <TextInput source="name" />
+    <TextInput source="slug" />
+    <LongTextInput source="content" />
 
     <ReferenceInput source="category" reference="categories">
       <SelectInput optionText="name" />
@@ -112,13 +108,9 @@ const ArticleCreacte = props => (
       <SelectArrayInput optionText="name" />
     </ReferenceArrayInput>
 
-    <ArrayInput source="images">
-      <SimpleFormIterator>
-        <ReferenceInput label="image" source="image" reference="images">
-          
-        </ReferenceInput>
-      </SimpleFormIterator>
-    </ArrayInput>
+    <ImageInput source="img" label="Related pictures" accept="image/*" multiple>
+      <ImageField source="src" title="title" />
+    </ImageInput>
   </CreateGuesser>
 );
 
@@ -133,6 +125,7 @@ const ImageCreate = props => (
   </CreateGuesser>
 );
 
+const uploadCapableDataProvider = addUploadFeature(process.env.API_URL)
 
 export default () => (
   <HydraAdmin entrypoint={process.env.API_URL}>
@@ -145,7 +138,6 @@ export default () => (
     />
     <ResourceGuesser name="options" />
     <ResourceGuesser name="categories" />
-    <ResourceGuesser name="images" 
-    create={ImageCreate}/>
+    <ResourceGuesser name="images" create={ImageCreate} />
   </HydraAdmin>
 );
