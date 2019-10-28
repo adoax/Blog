@@ -2,15 +2,36 @@
 body %}
 <div class="container pt-5">
   <h1 class="text-center">{{ article.name }}</h1>
-{% for image in article.images %} 
-  <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName') }}"/>
- <caption>{{ image.caption }}</caption>
-{% endfor %}
-  <p>{{article.slug}}</p>
+  {% for image in article.images %}
+  <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName') }}" />
+  <caption>
+    {{
+      image.caption
+    }}
+  </caption>
+  {% endfor %}
+  <p>{{ article.slug }}</p>
   <P>{{ article.category }}</P>
 
   {{  article.options | join(', ') }}
   <p>{{ article.content }}</p>
+
+  <hr />
+
+  <div class="container">
+    <h2>Il y a {{ article.comment | length }} Commentaire</h2>
+    {% for comment in article.comment %}
+    <p>{{ comment.content }}</p>
+    {% endfor %}
+  </div>
+
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  <div class="row">
+    <div class="col col-md-5">{{ form_row(form.content) }}</div>
+  </div>
+  <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+  {{ form_end(form) }}
 </div>
 
 {% endblock %}

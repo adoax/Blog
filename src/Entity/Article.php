@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiFilter;
 use App\Helpers\Text;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -14,7 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
  * @ApiResource(attributes={
- * "order"={"id": "DESC"}})
+ * "order"={"id": "DESC"},
+ * "pagination_items_per_page"=5})
  */
 class Article
 {
@@ -75,6 +75,11 @@ class Article
      * @ORM\Column(type="json_array")
      */
     private $img = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article")
+     */
+    private $Comment;
     
     public function __construct()
     {
@@ -82,6 +87,7 @@ class Article
         $this->updated_at = new \DateTime();
         $this->options = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->Comment = new ArrayCollection();
     }
     
     public function getNum(): ?int
@@ -266,6 +272,37 @@ class Article
     public function setImg(array $img): self
     {
         $this->img = $img;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComment(): Collection
+    {
+        return $this->Comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->Comment->contains($comment)) {
+            $this->Comment[] = $comment;
+            $comment->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->Comment->contains($comment)) {
+            $this->Comment->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getArticle() === $this) {
+                $comment->setArticle(null);
+            }
+        }
 
         return $this;
     }
