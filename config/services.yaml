@@ -30,6 +30,11 @@ services:
         tags:
         - { name: doctrine.event_subscriber }
 
+
+    Symfony\Component\Cache\Adapter\TagAwareAdapterInterface:
+        class: Symfony\Component\Cache\Adapter\TagAwareAdapter
+        arguments: ['@cache.app']
+
     #Gestion des caches avec TWIG
     Twig\CacheExtension\Extension:
         tags:

@@ -15,14 +15,14 @@ block body %}
     <div class="col-3">
       <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
         <div class="cardheader">
-
+              <p class="text-center">{{ article.name }} </p>
           
-           {% cache 'images' ~ article.UpdatedAt.timestamp
+           {% cache 'imagesIndex' ~ article.UpdatedAt.timestamp
           article.UpdatedAt.timestamp %} 
 
           {% if article.images  | slice(0, 1) %}
             {% for image in article.images |slice(0, 1) %}
-              <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName')  | imagine_filter('thumbs')  }}"/> 
+              <img class="img-fluid" src="{{ vich_uploader_asset(image, 'fileName')  | imagine_filter('thumbs')  }}" alt="{{ image.caption }}"/> 
             {% endfor %}
           {% else %}
               <img src="https://via.placeholder.com/360x230" class="img-fluid">
@@ -32,13 +32,16 @@ block body %}
         </div>
         <div class="card-body">
 
-          {#{% cache 'options' ~ article.UpdatedAt.timestamp
+           {% cache 'optionsIndex' ~ article.UpdatedAt.timestamp
           article.UpdatedAt.timestamp %}
-#}
+
+            {% if article.options | slice(0, 1) %}
             <p>Villes: {{ article.options | join(', ') }}</p>
-{#
-          {% endcache %}
-#}
+            {% else %}
+            <p> Villes:  </p>
+            {% endif %}
+             {% endcache %} 
+
           <p class="card-text">
             {{ article.ExtraitContent }}
           </p>
