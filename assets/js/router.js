@@ -13,10 +13,9 @@ export default function ArticleRoute() {
   return (
     <Switch>
       <Route exact  path="/" component={IndexArticle}/>
-      <Route  path="/show/:id" component={ShowArticle} />
-      <Route  path="/option/add" component={AddOptions} />
       <Route  path="/article/add" component={AddArticle} />
       <Route  path="/article/edit/:id" component={EditArticle} />
+      <Route  path="/:id" component={ShowArticle} />
     </Switch>
   );
 }

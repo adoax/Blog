@@ -12,12 +12,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
-{   
+{
 
     /**
      * @Route("/")
      */
-    public function index() {
+    public function index()
+    {
         return $this->redirectToRoute('article_index');
     }
 
@@ -35,11 +36,13 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_profil');
         }
 
-        return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error
-        ]
-    );
+        return $this->render(
+            'security/login.html.twig',
+            [
+                'last_username' => $lastUsername,
+                'error' => $error
+            ]
+        );
     }
     /**
      * @Route("/register", name="user_registration")
@@ -71,7 +74,8 @@ class SecurityController extends AbstractController
             'security/register.html.twig',
             [
                 'registrationForm' => $form->createView()
-            ], $this->addFlash('register', 'Vous êtes bien enregistrer, vous pouvez vous connectez')
+            ],
+            $this->addFlash('register', 'Vous êtes bien enregistrer, vous pouvez vous connectez')
         );
     }
 
@@ -82,6 +86,4 @@ class SecurityController extends AbstractController
     {
         return $this->addFlash('logout', 'A bientot !');
     }
-
-
 }

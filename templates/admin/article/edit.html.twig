@@ -1,23 +1,29 @@
-{% extends 'base.html.twig' %} {% block title %}Edit Article{% endblock %} {%
-block body %}
-<h1>Edit Article</h1>
-
-<div class="container">
-  {{ include("admin/article/_form.html.twig", { button_label: "Update" }) }}
-</div>
-
-<a class="btn btn-primary" href="{{ path('article_admin_index') }}">Retour a la liste</a>
-
+{% extends 'base.html.twig' %}
+{% block title %}
+	Edit Article
 {% endblock %}
 
 {% block stylesheets %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+{% endblock %}
+
+{% form_theme form 'admin/article/_collection.html.twig' %}
+
+{% block body %}
+	<h1>Edit Article</h1>
+
+	<div class="container">
+		{{ include("admin/article/_form.html.twig", { button_label: "Update" }) }}
+	</div>
+
+	<a class="btn btn-primary" href="{{ path('article_admin_index') }}">Retour a la liste</a>
+
 {% endblock %}
 
 {% block javascripts %}
-<script src="{{ asset('bundles/add-collection-widget.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-<script>
-  $('select').select2();
-</script>
+	<script src="{{ asset('bundles/add-collection-widget.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+	<script>
+		$('select').select2();
+	</script>
 {% endblock %}

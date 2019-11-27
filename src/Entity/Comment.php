@@ -5,9 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
+ * @ApiResource(
+ * denormalizationContext={"disable_type_enforcement"=true},
+ * normalizationContext={"groups"={"comment_read"}})
  */
 class Comment
 {
@@ -15,11 +20,13 @@ class Comment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read", "comment_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read", "comment_read"})
      */
     private $content;
 
@@ -79,5 +86,4 @@ class Comment
 
         return $this;
     }
-
 }

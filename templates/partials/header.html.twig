@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ path('article_index')}}">Navbar</a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          data-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+          >Menu</a
+        >
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{ path('article_index') }}"
+            >Article</a
+          >
+          <a class="dropdown-item" href="{{ path('category_index') }}"
+            >Categories</a
+          >
+          <a class="dropdown-item" href="{{ path('index_react') }}"
+            >React (article)
+          </a>
+        </div>
+      </li>
+      {% if app.user %} {% if app.user.roles.0 == 'ROLE_ADMIN' %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('home_admin') }}">Admin</a>
+      </li>
+      {% endif %} {% endif %}
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="{% if app.user %} {{path('app_profil')}} {% else %} {{ path('app_login') }} {% endif %}"
+        >
+          {% if app.user %}Profil {% else %} Se connecter {% endif %}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

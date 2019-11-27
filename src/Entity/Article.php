@@ -78,9 +78,10 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
+     * @Groups({"comment_read"})
      */
     private $Comment;
-    
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -89,7 +90,7 @@ class Article
         $this->images = new ArrayCollection();
         $this->Comment = new ArrayCollection();
     }
-    
+
     public function getNum(): ?int
     {
         return $this->id;
@@ -212,14 +213,25 @@ class Article
     }
 
     /**
-     * blaqb
+     * REtourne le contenue en clair, pour les images
      *
      *@Groups({"read"})
      */
-    public function getImageArticle() 
+    public function getImageArticle()
     {
-       return $this->images;
+        return $this->images;
     }
+
+    /**
+     * Retroune le contenue des champ BDD, en claire
+     * 
+     * @Groups({"read"})
+     */
+    public function getCommentText()
+    {
+        return $this->Comment;
+    }
+
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -306,5 +318,4 @@ class Article
 
         return $this;
     }
-
 }

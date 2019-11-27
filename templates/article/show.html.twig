@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %} {% block title %}Article{% endblock %} {% block
 body %}
+
+{% cache 'articleShow' ~ article.UpdatedAt.timestamp
+          article.UpdatedAt.timestamp %} 
+
 <div class="container pt-5">
   <h1 class="text-center">{{ article.name }}</h1>
   {% for image in article.images %}
@@ -17,10 +21,12 @@ body %}
   <p>{{ article.content }}</p>
 
   <hr />
+{% endcache %} 
 
   <div class="container">
     <h2>Il y a {{ article.comment | length }} Commentaire</h2>
     {% for comment in article.comment %}
+    {{ comment.user.email }}
     <p>{{ comment.content }}</p>
     {% endfor %}
   </div>
@@ -34,4 +40,7 @@ body %}
   {{ form_end(form) }}
 </div>
 
+
 {% endblock %}
+
+ 

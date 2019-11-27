@@ -33,35 +33,11 @@ export default class EditArticle extends React.Component {
     );
   };
 
-  handleSubmit = async event => {
-    event.preventDefault();
-
-    const item = {
-      name: this.state.name,
-      content: this.state.content,
-      slug: this.state.slug,
-      options: this.state.options.map(opt => "/api/options/" + opt.id)
-    };
-    const axiosAwait = await axios
-      .put(`https://127.0.0.1:8000/api/articles`, item)
-      .then(res => console.log(res))
-      .catch(res => {
-        console.log(res);
-        console.log(axiosAwait);
-        console.log(item);
-      });
-  };
-
   componentDidMount() {
-    axios.get(`https://127.0.0.1:8000/api/options`).then(res => {
+    axios.get(`http://127.0.0.1:8000/api/options`).then(res => {
       this.setState({
         items: res.data["hydra:member"],
         loading: true
-      });
-    });
-    axios.get(`https://127.0.0.1:8000/api/articles/27`).then(res => {
-      this.setState({
-        issou: res.data
       });
     });
   }
@@ -82,7 +58,7 @@ export default class EditArticle extends React.Component {
     });
 
     if (!this.state.loading) {
-      return <p>Chargement..</p>;
+      return <p>Edition..</p>;
     } else {
       return (
         <Formik
@@ -98,9 +74,9 @@ export default class EditArticle extends React.Component {
 
             setTimeout(() => {
               const item = {
-                name: values.name,
-                content: values.content,
-                slug: values.slug,
+                name: this.state.name,
+                content: this.state.content,
+                slug: this.state.slug,
                 options: this.state.options.map(opt => "/api/options/" + opt.id)
                 //.map(opt => "/api/options/" + opt.id)
               };

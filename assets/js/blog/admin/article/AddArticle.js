@@ -42,7 +42,7 @@ export default class AddArticle extends React.Component {
       options: this.state.options.map(opt => "/api/options/" + opt.id)
     };
     const axiosAwait = await axios
-      .put(`https://127.0.0.1:8000/api/articles`, item)
+      .put(`http://127.0.0.1:8000/api/articles`, item)
       .then(res => console.log(res))
       .catch(res => {
         console.log(res);
@@ -52,7 +52,7 @@ export default class AddArticle extends React.Component {
   };
 
   componentDidMount() {
-    axios.get(`https://127.0.0.1:8000/api/options`).then(res => {
+    axios.get(`http://127.0.0.1:8000/api/options`).then(res => {
       this.setState({
         items: res.data["hydra:member"],
         loading: true
@@ -99,7 +99,7 @@ export default class AddArticle extends React.Component {
                 //.map(opt => "/api/options/" + opt.id)
               };
               const axiosAwait = axios
-                .post(`https://127.0.0.1:8000/api/articles`, item)
+                .post(`http://127.0.0.1:8000/api/articles`, item)
                 .then(res => {
                   console.log(res.data)
                 })
@@ -126,7 +126,6 @@ export default class AddArticle extends React.Component {
             isSubmitting
           }) => (
             <form onSubmit={handleSubmit}>
-              {console.log(this.state.issou, 'issou')}
               <div className="form-group">
                 <label htmlFor="name">Titre</label>
                 <input

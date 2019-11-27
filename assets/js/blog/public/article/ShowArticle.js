@@ -12,7 +12,7 @@ export default class ShowArticle extends React.Component {
 
   componentDidMount() {
     axios
-      .get(`https://127.0.0.1:8000/api/articles/${this.props.match.params.id}`)
+      .get(`http://127.0.0.1:8000/api/articles/${this.props.match.params.id}`)
       .then(result => {
         this.setState({
           items: result.data,
@@ -24,39 +24,36 @@ export default class ShowArticle extends React.Component {
   render() {
     const { items, loading } = this.state;
     if (!loading) {
-      return <div>Chargement...</div>;
+      return <div className="container">Chargement de l'artilce...</div>;
     } else {
       return (
-        <div className="row">
-          {this.props.match.params.react}
+        <div className="container">
+          <h1 className="mx-auto my-5">{items.name}</h1>
+          <div className="row ">
+            {this.props.match.params.react}
+            <div className="col-12">
+              {items.nameOption.map(option => (
+                <span className="badge badge-primary m-1"> {option.name} </span>
+              ))}
+            </div>
 
-          <h3 className="mx-auto">{items.name}</h3>
-          <div className="col-12">
-            {items.images.map(image => (
-              <img
-                src={__dirname + "images/articles/" + image.url}
-                className="img-fluid"
-              />
+            {items.imageArticle.map(image => (
+              <div className="col-6">
+                <img
+                  src={__dirname + "images/articles/" + image.url}
+                  className="img-fluid"
+                />
+              </div>
             ))}
-
-            <p>{items.content}</p>
-          </div>
-          <div className="col-12">
-            {items.nameOption
-              .map(option => (
-                <span className="badge badge-primary"> {option.name}</span>
-              ))
-              .reduce(
-                (acc, x) =>
-                  acc === null ? (
-                    x
-                  ) : (
-                    <>
-                      {acc} {x}
-                    </>
-                  ),
-                null
-              )}
+            <div className="col-12">
+              <p>{items.content}</p>
+            </div>
+              <hr/>
+              <div className="col">
+                {items.commentText.map(comment => (
+                  <p>{comment.content}</p>
+                ))}
+              </div>
           </div>
         </div>
       );
